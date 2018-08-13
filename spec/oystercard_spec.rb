@@ -20,6 +20,19 @@ describe Oystercard do
 
   end
 
+  describe '#deduct' do
+    it { is_expected.to respond_to(:deduct).with(1).argument }
+
+    it "can deduct the balance" do
+      expect{ subject.deduct 10 }.to change{ subject.balance }.by -10
+    end
+
+    # it "raises an error when the balance limit is exceeded" do
+    #   expect{ subject.top_up(91) }.to raise_error "Balance limit of £#{Oystercard::BALANCE_LIMIT} exceeded"
+    # end
+
+  end
+
 
 
 end
