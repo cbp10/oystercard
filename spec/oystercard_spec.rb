@@ -33,6 +33,16 @@ describe Oystercard do
 
   end
 
+  describe '#in_journey?' do
 
+    it 'returns a boolean' do
+    expect(subject.in_journey?).to be(true).or be(false)
+    end
+
+  end
+
+  describe '#touch_in' do
+    it { is_expected.to respond_to(:touch_in) }
+  end
 
 end
