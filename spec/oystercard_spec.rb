@@ -14,6 +14,12 @@ describe Oystercard do
       expect{ subject.top_up 10 }.to change{ subject.balance }.by 10
     end
 
+    it "raises an error when the balance limit is exceeded" do
+      expect{ subject.top_up(91) }.to raise_error "Balance limit exceeded"
+    end
+
   end
+
+
 
 end
