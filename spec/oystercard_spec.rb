@@ -2,6 +2,8 @@ require 'oystercard'
 
 describe Oystercard do
 
+  #let(:card) { Oystercard.new }
+
   it 'on initialization has a balance by default' do
     expect(subject.balance).to eq 0
   end
@@ -21,18 +23,9 @@ describe Oystercard do
   end
 
   describe '#deduct' do
-    it { is_expected.to respond_to(:deduct).with(1).argument }
 
     it "can deduct the balance" do
-      expect{ subject.deduct 10 }.to change{ subject.balance }.by -10
-    end
-
-  end
-
-  describe '#in_journey' do
-
-    it 'returns a boolean' do
-    expect(subject.in_journey).to be(true).or be(false)
+      expect{ subject.send(:deduct, 10) }.to change{ subject.balance }.by -10
     end
 
   end
@@ -41,12 +34,18 @@ describe Oystercard do
 
     it 'can touch in when balance is more than minimum required' do
       subject.top_up(10)
-      subject.touch_in
-      expect(subject.in_journey).to eq(true)
+      subject.touch_in("Victoria")
+      expect(subject.send (:in_journey?)).to eq(true)
     end
 
     it 'will not touch in if balance is below minimum balance to travel' do
-      expect{ subject.touch_in }.to raise_error 'Insufficient funds to travel'
+      expect{ subject.touch_in("Victoria") }.to raise_error 'Insufficient funds to travel'
+    end
+
+    it 'records entry station after #touch_in' do
+      subject.top_up(10)
+      subject.touch_in("Victoria")
+      expect(subject.entry_station).to eq "Victoria"
     end
 
   end
@@ -55,9 +54,27 @@ describe Oystercard do
 
     it 'can touch out' do
       subject.touch_out
-      expect(subject.in_journey).to eq(false)
+      expect(subject.send (:in_journey?)).to eq(false)
     end
 
+    it 'can deduct funds when journey is complete' do
+      expect{subject.touch_out}.to change{subject.balance}.by -1
+    end
+
+    it 'can forgot the #entry_station on #touch_out' do
+      subject.top_up(10)
+      subject.touch_in("Victoria")
+      subject.touch_out
+      expect(subject.entry_station).to eq nil
+    end
+
+  end
+
+  describe '#in_journey?' do
+
+    it 'returns false if not on a journey' do
+      expect( subject.send ( :in_journey? ) ).to eq false
+    end
   end
 
 end
