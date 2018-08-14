@@ -7,7 +7,8 @@ class Oystercard
   attr_reader :balance, :entry_station, :exit_station, :journeys
   #attr_accessor :in_journey
 
-  def initialize(balance = 0)
+  def initialize(balance = 0) #stations = Station.new)
+  #  @stations = stations
     @balance = balance
     @journeys = []
   end
@@ -22,7 +23,7 @@ class Oystercard
   end
 
   def touch_in(entry_station)
-    fail 'Insufficient funds to travel' if @balance < MINIMUM_BALANCE
+    fail 'Insufficient funds to travel' if balance < MINIMUM_BALANCE
     @entry_station = entry_station
   end
 
