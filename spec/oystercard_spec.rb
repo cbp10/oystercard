@@ -8,6 +8,10 @@ describe Oystercard do
     expect(subject.balance).to eq 0
   end
 
+  it 'on initialization card has empty list of journeys' do
+    expect(subject.journeys).to eq []
+  end
+
   describe '#top_up' do
 
     it { is_expected.to respond_to(:top_up).with(1).argument }
@@ -53,18 +57,18 @@ describe Oystercard do
   describe '#touch_out' do
 
     it 'can touch out' do
-      subject.touch_out
+      subject.touch_out("Waterloo")
       expect(subject.send (:in_journey?)).to eq(false)
     end
 
     it 'can deduct funds when journey is complete' do
-      expect{subject.touch_out}.to change{subject.balance}.by -1
+      expect{subject.touch_out("Waterloo")}.to change{subject.balance}.by -1
     end
 
     it 'can forgot the #entry_station on #touch_out' do
       subject.top_up(10)
       subject.touch_in("Victoria")
-      subject.touch_out
+      subject.touch_out("Waterloo")
       expect(subject.entry_station).to eq nil
     end
 
@@ -74,6 +78,15 @@ describe Oystercard do
 
     it 'returns false if not on a journey' do
       expect( subject.send ( :in_journey? ) ).to eq false
+    end
+  end
+
+  describe 'journeys' do
+    it 'creates one journey from a #touch_in and #touch_out' do
+      subject.top_up(10)
+      subject.touch_in("Victoria")
+      subject.touch_out("Waterloo")
+      expect(subject.journeys).to eq [{"Victoria" => "Waterloo"}]
     end
   end
 
