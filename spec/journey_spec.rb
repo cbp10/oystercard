@@ -24,12 +24,12 @@ describe Journey do
   describe "#fare" do
     it "returns the journey fare" do
       journey2 = Journey.new(entry_station)
-      expect(journey2.fare).to eq 6
+      expect(journey2.fare).to eq Oystercard::PENALTY_FARE
     end
 
     it "returns the journey fare" do
       journey.complete(exit_station)
-      expect(journey.fare).to eq 1
+      expect(journey.fare).to eq Oystercard::MINIMUM_FARE
     end
   end
 
