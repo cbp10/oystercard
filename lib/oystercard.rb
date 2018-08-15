@@ -11,7 +11,7 @@ class Oystercard
 
   def initialize(balance = 0)
     @balance = balance
-    @journeys = []
+    @journeylog = JourneyLog.new(Journey)
   end
 
   def top_up(amount)
@@ -25,13 +25,12 @@ class Oystercard
 
   def touch_in(entry_station)
     fail 'Insufficient funds to travel' if balance < MINIMUM_BALANCE
-    @journey = Journey.new(entry_station)
+    @journeylog.start(entry_station)
   end
 
   def touch_out(exit_station)
     deduct(MINIMUM_FARE)
-    @journey.complete(exit_station)
-    @journeys << @journey
+    @journeylog.finish(exit_station)
   end
 
   private
