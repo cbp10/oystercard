@@ -1,11 +1,9 @@
 class Journey
-
   PENALTY_FARE = 6
   MINIMUM_FARE = 1
 
   def initialize
     @in_progress = true
- 
   end
 
   def start_journey(station)
@@ -24,12 +22,4 @@ class Journey
     return PENALTY_FARE unless complete?
     MINIMUM_FARE
   end
-    
-
-
-
 end
-
-
-
-# call fare on any journey object

@@ -1,6 +1,5 @@
 require 'journey'
 
-
 describe Journey do
     entry_station = "Victoria"
     exit_station = "Aldgate"
@@ -8,18 +7,16 @@ describe Journey do
     let(:s1) { double :station, zone: 1 }
     let(:s2) { double :station, zone: 2 }
 
-  describe "#complete?" do
-    
+  describe "#complete?" do  
     it "returns false if the journey is not complete" do
-      expect(journey.in_progress).to eq true
+      expect(subject.complete?).to eq false
     end
-
 
     it "returns true if the journey is complete" do
-      journey.complete(exit_station)
-      expect(journey.in_progress).to eq false
+      subject.start_journey(s1)
+      subject.finish_journey(s2)
+      expect(subject.complete?).to eq true
     end
-
   end
 
 
@@ -36,17 +33,15 @@ describe Journey do
     end
   end
   
-  describe 'start journey' do
+  describe '#start_journey' do
     it 'sets entry zone to entry zone number' do
       expect(subject.start_journey(s1)).to eq 1
     end
   end
   
-  describe 'finish journey' do
+  describe '#finish_journey' do
     it 'sets exit zone to exit zone number' do
       expect(subject.finish_journey(s2)).to eq 2
     end
   end
-
-
 end

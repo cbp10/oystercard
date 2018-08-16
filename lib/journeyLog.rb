@@ -25,9 +25,8 @@ class JourneyLog
   end
 
  private
+
    def current_journey
     { entry: @in, exit: @out, fare: @journey_class.fare}
   end
 end
-
-
