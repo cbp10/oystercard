@@ -47,6 +47,7 @@ st2 = Stations.new({name: :YY, zone:5})
 oc.touch_in(st1)
 oc.touch_out(st2)
 
+p oc.journeylog.journey_class.start_time
 p oc.journeylog.journeys
 
 

@@ -6,12 +6,6 @@ module TimeMod
     hour + minute
   end
 
-  def peak?(t)
-    return true if t > '0629' && t < '0930'
-    return true if t > '1559' && t < '1900'
-    false
-  end
-
   private
 
   def hour
@@ -26,12 +20,3 @@ module TimeMod
 end
 
 
-class NewClass
-  include TimeMod
-end
-
-nc = NewClass.new
-
-t = nc.time
-p t
-p nc.peak?(t)
