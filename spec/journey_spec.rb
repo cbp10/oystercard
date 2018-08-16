@@ -4,7 +4,9 @@ require 'journey'
 describe Journey do
     entry_station = "Victoria"
     exit_station = "Aldgate"
-    journey = Journey.new(entry_station)
+    journey = Journey.new
+    let(:s1) { double :station, zone: 1 }
+    let(:s2) { double :station, zone: 2 }
 
   describe "#complete?" do
     
@@ -22,18 +24,29 @@ describe Journey do
 
 
   describe "#fare" do
-    it "returns the journey fare" do
-      journey2 = Journey.new(entry_station)
-      expect(journey2.fare).to eq Oystercard::PENALTY_FARE
+    it "returns the penalty fare if entry or exit station is nil" do
+      journey.start_journey(s1)
+      expect(journey.fare).to eq Journey::PENALTY_FARE
     end
 
-    it "returns the journey fare" do
-      journey.complete(exit_station)
-      expect(journey.fare).to eq Oystercard::MINIMUM_FARE
+    it "returns the minimum fare for complete journeys" do
+      journey.start_journey(s1)
+      journey.finish_journey(s2)
+      expect(journey.fare).to eq Journey::MINIMUM_FARE
     end
   end
-
-
+  
+  describe 'start journey' do
+    it 'sets entry zone to entry zone number' do
+      expect(subject.start_journey(s1)).to eq 1
+    end
+  end
+  
+  describe 'finish journey' do
+    it 'sets exit zone to exit zone number' do
+      expect(subject.finish_journey(s2)).to eq 2
+    end
+  end
 
 
 end

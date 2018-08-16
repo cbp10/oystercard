@@ -1,5 +1,5 @@
 require 'journeyLog'
 
-desribe JourneyLog do
+describe JourneyLog do
   
 end

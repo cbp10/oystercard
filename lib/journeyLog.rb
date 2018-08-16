@@ -1,18 +1,23 @@
-class JourneyLog
+require_relative 'journey'
 
-  def initialize(journey_class)
+class JourneyLog
+  attr_reader :journey_class
+
+  def initialize(journey_class = Journey.new)
     @journey_class = journey_class
     @journeys = []
   end
 
   def start(station)
-    @current_journey = @journey_class.new(station)
+    @in = station.name
+    @journey_class.start_journey(station)
   end
 
   def finish(station)
-    @current_journey.complete(station)
-    @journeys << @current_journey
-    @current_journey = nil
+    @out = station.name
+    @journey_class.finish_journey(station)
+    @journeys << current_journey
+    
   end
 
   def journeys
@@ -21,7 +26,7 @@ class JourneyLog
 
  private
    def current_journey
-    @current_journey ||= journey_class.new(station)
+    { entry: @in, exit: @out, fare: @journey_class.fare}
   end
 end
 
