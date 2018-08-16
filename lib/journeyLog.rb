@@ -10,14 +10,15 @@ class JourneyLog
 
   def start(station)
     @in = station.name
+    @journeys << current_journey
     @journey_class.start_journey(station)
   end
 
   def finish(station)
     @out = station.name
     @journey_class.finish_journey(station)
-    @journeys << current_journey
-    
+    @journeys << current_journey if @journeys.empty?
+    @journeys[-1] = current_journey
   end
 
   def journeys
