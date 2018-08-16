@@ -41,8 +41,8 @@ end
 
 oc = Oystercard.new(20)
 
-st1 = Stations.new({name: :XX, zone:1})
-st2 = Stations.new({name: :YY, zone:3})
+st1 = Stations.new({name: :XX, zone:2})
+st2 = Stations.new({name: :YY, zone:5})
 
 oc.touch_in(st1)
 oc.touch_out(st2)

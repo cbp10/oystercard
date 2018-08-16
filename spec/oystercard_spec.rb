@@ -39,7 +39,8 @@ describe Oystercard do
   describe '#touch_out' do 
     it 'can deduct funds when journey is complete' do
       card.touch_in(entry_station)
-      expect{card.touch_out(exit_station)}.to change{card.balance}.by -1
+      card.touch_out(exit_station)
+      expect(card.balance).to eq 7.10
     end
 
     it 'can forgot the #entry_station on #touch_out' do

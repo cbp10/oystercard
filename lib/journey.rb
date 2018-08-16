@@ -1,4 +1,8 @@
+require_relative 'fare_mod'
+
 class Journey
+  include FareMod
+
   PENALTY_FARE = 6
   MINIMUM_FARE = 1
 
@@ -20,6 +24,6 @@ class Journey
 
   def fare  
     return PENALTY_FARE unless complete?
-    MINIMUM_FARE
+    peak_fare([@start_zone, @end_zone]).round(2)
   end
 end

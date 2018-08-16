@@ -27,7 +27,7 @@ describe JourneyLog do
 
     it 'returns a hash of the journey info' do
       subject.start(st1)
-      expect(subject.finish(st2)).to eq [{entry: :XX, exit: :YY, fare: 1}]
+      expect(subject.finish(st2)).to eq({entry: :XX, exit: :YY, fare: 3.3})
     end
   end
 
@@ -35,7 +35,7 @@ describe JourneyLog do
     it 'returns the journey history' do
       subject.start(st1)
     subject.finish(st2)
-    expect(subject.journeys).to eq [{entry: :XX, exit: :YY, fare: 1}]
+    expect(subject.journeys).to eq [{entry: :XX, exit: :YY, fare: 3.3}]
     end
   end
 end

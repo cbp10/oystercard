@@ -25,12 +25,6 @@ describe Journey do
       journey.start_journey(s1)
       expect(journey.fare).to eq Journey::PENALTY_FARE
     end
-
-    it "returns the minimum fare for complete journeys" do
-      journey.start_journey(s1)
-      journey.finish_journey(s2)
-      expect(journey.fare).to eq Journey::MINIMUM_FARE
-    end
   end
   
   describe '#start_journey' do
